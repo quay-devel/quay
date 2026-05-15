@@ -549,8 +549,10 @@ test.describe(
         .first();
       await expect(errorAlert).toBeVisible({timeout: 10000});
 
-      // The alert message is in a collapsed expandable section; verify the
-      // specific API error text is present in the alert (not the generic HTTP error)
+      // Expand the alert to reveal the detailed error message
+      await errorAlert.locator('.pf-v6-c-alert__toggle button').click();
+
+      // Verify the specific API error text is shown, not the generic HTTP error
       await expect(errorAlert).toContainText(specificErrorMessage);
       await expect(errorAlert).not.toContainText(
         'Request failed with status code 400',
